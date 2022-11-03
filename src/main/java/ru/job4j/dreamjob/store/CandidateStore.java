@@ -6,15 +6,15 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CandidateStore {
     private static final CandidateStore CST = new CandidateStore();
-    private final Map<Integer, Candidate> candidate = new ConcurrentHashMap<>();
+    private final AtomicInteger idS = new AtomicInteger(1);
+
+    private final Map<Integer, Candidate> candidateStore = new ConcurrentHashMap<>();
 
     private CandidateStore() {
-        candidate.put(1, new Candidate(1, "Artur", "Java EE", LocalDateTime.now()));
-        candidate.put(2, new Candidate(2, "Olga", "Spring", LocalDateTime.now()));
-        candidate.put(3, new Candidate(3, "Ivan", "Hibernate", LocalDateTime.now()));
     }
 
     public static CandidateStore instOf() {
@@ -22,6 +22,20 @@ public class CandidateStore {
     }
 
     public Collection<Candidate> findAll() {
-        return candidate.values();
+        return candidateStore.values();
+    }
+
+    public void addCandidate(Candidate candidate) {
+        candidate.setId(idS.getAndIncrement());
+        candidate.setCreated(LocalDateTime.now());
+        candidateStore.put(candidate.getId(), candidate);
+    }
+
+    public Candidate findByIdCandidate(int id) {
+        return candidateStore.get(id);
+    }
+
+    public void updateCandidate(Candidate candidate) {
+        candidateStore.replace(candidate.getId(), candidate);
     }
 }

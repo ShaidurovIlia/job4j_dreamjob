@@ -14,12 +14,9 @@ public class PostStore {
 
     private final AtomicInteger idS = new AtomicInteger(1);
 
-    private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
+    private final Map<Integer, Post> postStore = new ConcurrentHashMap<>();
 
     private PostStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "CCC", LocalDateTime.now()));
-        posts.put(2, new Post(2, "Middle Java Job", "BBB", LocalDateTime.now()));
-        posts.put(3, new Post(3, "Senior Java Job", "AAA", LocalDateTime.now()));
     }
 
     public static PostStore instOf() {
@@ -27,20 +24,20 @@ public class PostStore {
     }
 
     public Collection<Post> findAll() {
-        return posts.values();
+        return postStore.values();
     }
 
     public void add(Post post) {
         post.setId(idS.getAndIncrement());
         post.setCreated(LocalDateTime.now());
-        posts.put(post.getId(), post);
+        postStore.put(post.getId(), post);
     }
 
     public Post findById(int id) {
-        return posts.get(id);
+        return postStore.get(id);
     }
 
     public void update(Post post) {
-        posts.replace(post.getId(), post);
+        postStore.replace(post.getId(), post);
     }
 }
