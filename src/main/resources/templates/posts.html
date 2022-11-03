@@ -47,7 +47,7 @@
       </thead>
       <tbody>
       <tr th:each="post: ${posts}">
-        <td th:text="${post.id}"></td>
+        <td th:text="${post.id}" />
         <td>
           <a th:href="@{|/formUpdatePost/${post.id}|}">
             <i class="fa fa-edit"></i>

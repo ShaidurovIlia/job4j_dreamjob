@@ -1,5 +1,6 @@
-package ru.job4j.dreamjob.store;
+package ru.job4j.dreamjob.persistence;
 
+import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Post;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Repository
 public class PostStore {
 
     private static final PostStore INST = new PostStore();
@@ -27,17 +29,17 @@ public class PostStore {
         return postStore.values();
     }
 
-    public void add(Post post) {
+    public void addPost(Post post) {
         post.setId(idS.getAndIncrement());
         post.setCreated(LocalDateTime.now());
         postStore.put(post.getId(), post);
     }
 
-    public Post findById(int id) {
+    public Post findByIdPost(int id) {
         return postStore.get(id);
     }
 
-    public void update(Post post) {
+    public void updatePost(Post post) {
         postStore.replace(post.getId(), post);
     }
 }

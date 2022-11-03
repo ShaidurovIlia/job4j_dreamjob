@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.dreamjob.model.Candidate;
-import ru.job4j.dreamjob.store.CandidateStore;
+import ru.job4j.dreamjob.service.CandidateService;
 
 import java.time.LocalDateTime;
 
 @Controller
 public class CandidateController {
 
-    private final CandidateStore  candControl = CandidateStore.instOf();
+    private final CandidateService candidateService = CandidateService.instOf();
 
     @GetMapping("/candidates")
     public String candidates(Model model) {
-        model.addAttribute("candidates", candControl.findAll());
+        model.addAttribute("candidates", candidateService.findAll());
         return "candidates";
     }
 
@@ -26,24 +26,24 @@ public class CandidateController {
     public String addCandidate(Model model) {
         model.addAttribute("candidates", new Candidate(0, "Заполните поле",
                 "Заполните поле", LocalDateTime.now()));
-        return "addCandidate";
+        return "AddCandidate";
     }
 
     @PostMapping("/createCandidate")
     public String createCandidate(@ModelAttribute Candidate candidate) {
-        candControl.addCandidate(candidate);
+        candidateService.addCandidate(candidate);
         return "redirect:/candidates";
     }
 
-    @GetMapping("/formUpdateCandidate/{postId}")
+    @GetMapping("/formUpdateCandidates/{postId}")
     public String formUpdateCandidate(Model model, @PathVariable("postId") int id) {
-        model.addAttribute("candidateUPD", candControl.findByIdCandidate(id));
+        model.addAttribute("candidateUPD", candidateService.findByIdCandidate(id));
         return "updateCandidates";
     }
 
     @PostMapping("/updateCandidates")
     public String updateCandidate(@ModelAttribute Candidate candidate) {
-        candControl.updateCandidate(candidate);
+        candidateService.updateCandidate(candidate);
         return "redirect:/candidates";
     }
 }

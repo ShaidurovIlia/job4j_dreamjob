@@ -47,15 +47,15 @@
             </thead>
             <tbody>
             <tr th:each="candidate: ${candidates}">
-                <td th:text="${candidate.id}" />
+                <td th:text="${candidate.id}"/>
                 <td>
                     <a th:href="@{|/formUpdateCandidates/${candidate.id}|}">
                         <i class="fa fa-edit"></i>
                     </a>
                     <span th:text="${candidate.name}"></span>
                 </td>
-                <td th:text="${candidate.desc}" />
-                <td th:text="${candidate.created}" />
+                <td th:text="${candidate.desc}"/>
+                <td th:text="${candidate.created}"/>
             </tr>
             </tbody>
         </table>
