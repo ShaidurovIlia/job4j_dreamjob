@@ -11,14 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class CandidateStore {
-    private static final CandidateStore CST = new CandidateStore();
     private final AtomicInteger idS = new AtomicInteger(1);
 
     private final Map<Integer, Candidate> candidateStore = new ConcurrentHashMap<>();
-
-    public static CandidateStore instOf() {
-        return CST;
-    }
 
     public Collection<Candidate> findAll() {
         return candidateStore.values();
