@@ -40,11 +40,16 @@
     </div>
   </nav>
   <div class="row">
+    <div class="card" style="width: 100%">
+      <div class="card-header">
+        Вакансии
+      </div>
     <table class="table">
       <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Имя</th>
+        <th scope="col">Название вакансии</th>
+        <th scope="col">Город</th>
         <th scope="col">Описание вакансии</th>
         <th scope="col">Дата создания</th>
       </tr>
@@ -64,11 +69,13 @@
             <i class="fa fa-square-o"></i>
         </span>
         </td>
+        <td th:text="${post.city.name}" />
         <td th:text="${post.description}" />
         <td th:text="${post.created}" />
       </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </div>
 </body>

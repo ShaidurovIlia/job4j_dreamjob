@@ -14,30 +14,18 @@ public class Post implements Serializable {
 
     private boolean visible;
 
+    private City city;
+
     public Post() {
     }
 
-    public Post(int id, String name, String description, LocalDateTime created) {
+    public Post(int id, String name, String description, LocalDateTime created, City city) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
-    }
+        this.city = city;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
     }
 
     public int getId() {
@@ -56,12 +44,36 @@ public class Post implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     public boolean isVisible() {
         return visible;
     }
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override
@@ -83,10 +95,11 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return "Post{" + "id="
-                + id + ", name='"
-                + name + '\'' + ", description='"
-                + description + '\'' + ", created="
-                + created + '}';
+        return "Post{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", created=" + created
+                + '}';
     }
 }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -34,10 +35,10 @@
             </div>
         </div>
     </nav>
-    <div class="row">
+    <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Редактирование резюме кандидата.
+                Редактирование резюме кандидата
             </div>
             <div class="card-body">
                 <form th:action="@{/updateCandidates}" method="POST" th:object="${candidateUPD}">
@@ -47,10 +48,20 @@
                         <input type="text" class="form-control" name="name" id="name" th:field="*{name}">
                     </div>
                     <div class="form-group">
-                        <label for="name">Должность</label>
-                        <input type="text" class="form-control" name="desc" id="description" th:field="*{desc}">
+                        <label for="city.id">Город</label>
+                        <select class="form-control" id="city.id" name="city.id">
+                            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Описание вакансии</label>
+                        <input type="text" class="form-control" name="desc" id="desc" th:field="*{desc}">
                     </div>
                     <input type="hidden" name="created" th:field="*{created}"/>
+                    <div class="form-check">
+                        <input type="checkbox" name="visible" class="form-check-input" id="visible">
+                        <label class="form-check-label" for="visible">Опубликовать</label>
+                    </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
             </div>
