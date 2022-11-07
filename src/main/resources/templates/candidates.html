@@ -61,6 +61,7 @@
                             <span th:if="${candidate.visible}">
                                 <i class="fa fa-check-square-o"></i>
                             </span>
+                        <img th:width="150" th:high="150" th:src="@{|/photoCandidate/${candidate.id}|}">
                         <span th:if="${!candidate.visible}">
                                 <i class="fa fa-square-o"></i>
                         </span>
