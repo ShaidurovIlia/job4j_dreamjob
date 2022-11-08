@@ -12,8 +12,7 @@ public class City {
         this.name = name;
     }
 
-    public City(int city) {
-
+    public City() {
     }
 
     public int getId() {

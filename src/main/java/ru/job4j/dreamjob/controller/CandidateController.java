@@ -39,18 +39,18 @@ public class CandidateController {
     @GetMapping("/formAddCandidate")
     public String addCandidate(Model model) {
         model.addAttribute("candidates",
-                new Candidate(0, "Заполните поле", "Заполните поле", LocalDateTime.now(),
-                        new City(0, "Выберите город из списка")));
+                new Candidate(0, "Заполните поле", "Заполните поле", LocalDateTime.now(), null));
         model.addAttribute("cities", cityService.getAllCities());
-        return "AddCandidate";
+        return "addCandidate";
     }
 
     @PostMapping("/createCandidate")
     public String createCandidate(@ModelAttribute Candidate candidate,
                                   @RequestParam("file") MultipartFile file) throws IOException {
         candidate.setCity(cityService.findById(candidate.getCity().getId()));
-        candidateService.addCandidate(candidate);
+        candidate.setCreated(LocalDateTime.now());
         candidate.setPhoto(file.getBytes());
+        candidateService.addCandidate(candidate);
         return "redirect:/candidates";
     }
 

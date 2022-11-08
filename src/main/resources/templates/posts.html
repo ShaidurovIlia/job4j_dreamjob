@@ -69,7 +69,7 @@
             <i class="fa fa-square-o"></i>
         </span>
         </td>
-        <td th:text="${post.city.name}" />
+        <td th:text="${post.getCity().getName()}" />
         <td th:text="${post.description}" />
         <td th:text="${post.created}" />
       </tr>

@@ -35,8 +35,7 @@ public class PostController {
     @GetMapping("/formAddPost")
     public String addPost(Model model) {
         model.addAttribute("posts",
-                new Post(0, "Заполните поле", "Заполните поле", LocalDateTime.now(),
-                        new City(0, "Выберите город из списка")));
+                new Post(0, "Заполните поле", "Заполните поле", LocalDateTime.now(), null));
         model.addAttribute("cities", cityService.getAllCities());
         return "addPost";
     }
@@ -44,6 +43,7 @@ public class PostController {
     @PostMapping("/createPost")
     public String createPost(@ModelAttribute Post post) {
         post.setCity(cityService.findById(post.getCity().getId()));
+        post.setCreated(LocalDateTime.now());
         postService.addPost(post);
         return "redirect:/posts";
     }

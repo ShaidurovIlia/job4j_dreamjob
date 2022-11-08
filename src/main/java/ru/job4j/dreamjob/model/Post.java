@@ -25,7 +25,15 @@ public class Post implements Serializable {
         this.description = description;
         this.created = created;
         this.city = city;
+    }
 
+    public Post(int id, String name, String description, LocalDateTime created, boolean visible, City city) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.created = created;
+        this.visible = visible;
+        this.city = city;
     }
 
     public int getId() {
@@ -91,15 +99,5 @@ public class Post implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Post{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", description='" + description + '\''
-                + ", created=" + created
-                + '}';
     }
 }
