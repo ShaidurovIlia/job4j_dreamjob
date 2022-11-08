@@ -12,7 +12,7 @@ import java.util.Map;
 @ThreadSafe
 @Service
 public class CityService {
-    private Map<Integer, City> cities = new HashMap<Integer, City>();
+    private Map<Integer, City> cities = new HashMap<>();
 
     public CityService() {
         cities.put(1, new City(1, "Москва"));
