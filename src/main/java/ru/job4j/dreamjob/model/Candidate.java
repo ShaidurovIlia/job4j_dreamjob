@@ -11,7 +11,6 @@ public class Candidate implements Serializable {
     private LocalDateTime created;
     private boolean visible;
     private City city;
-
     private byte[] photo;
 
     public Candidate() {
@@ -25,8 +24,8 @@ public class Candidate implements Serializable {
         this.city = city;
     }
 
-    public Candidate(int id, String name, String description,
-                     LocalDateTime created, City city, byte[] photo) {
+    public Candidate(int id, String name, String description, LocalDateTime created, City city,
+                     byte[] photo) {
         this.id = id;
         this.name = name;
         this.description = description;

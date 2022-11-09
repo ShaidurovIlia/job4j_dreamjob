@@ -20,7 +20,8 @@ public class CandidateDBStore {
 
     private static final String SQL_SELECT_ALL = "SELECT * FROM candidate ORDER BY id";
     private static final String SQL_INSERT =
-            "INSERT INTO candidate(name, description, created, city_id) VALUES (?, ?, ?, ?)";
+            "INSERT INTO candidate(name, description, created, city_id, photo) "
+                    + "VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE =
             "UPDATE candidate SET name = ?, description = ?, created = ?, city_id = ?, photo = ?"
                     + " WHERE id = ?";
@@ -54,6 +55,7 @@ public class CandidateDBStore {
             ps.setString(2, candidate.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
             ps.setInt(4, candidate.getCity().getId());
+            ps.setBytes(5, candidate.getPhoto());
             ps.execute();
             try (ResultSet it = ps.getGeneratedKeys()) {
                 if (it.next()) {
@@ -72,8 +74,8 @@ public class CandidateDBStore {
             ps.setString(2, candidate.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(candidate.getCreated()));
             ps.setInt(4, candidate.getCity().getId());
-           // ps.setInt(5, candidate.getPhoto());
-            ps.setInt(5, candidate.getId());
+            ps.setBytes(5, candidate.getPhoto());
+            ps.setInt(6, candidate.getId());
             ps.execute();
         } catch (Exception e) {
             LOG.error("CandidateDbStore. Ошибка в методе updateCandidate - ", e);
@@ -102,7 +104,8 @@ public class CandidateDBStore {
                 it.getString("name"),
                 it.getString("description"),
                 it.getTimestamp("created").toLocalDateTime(),
-                new City(it.getInt("city_id"), null)
+                new City(it.getInt("city_id"), null),
+                it.getBytes("photo")
         );
     }
 }

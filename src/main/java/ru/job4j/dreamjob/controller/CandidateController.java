@@ -42,7 +42,7 @@ public class CandidateController {
                 new Candidate(0, "Заполните поле", "Заполните поле", LocalDateTime.now(),
                         new City(0, "Выберете город из списка")));
         model.addAttribute("cities", cityService.getAllCities());
-        return "AddCandidate";
+        return "addCandidate";
     }
 
     @PostMapping("/createCandidate")
