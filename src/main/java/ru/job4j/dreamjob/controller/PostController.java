@@ -35,7 +35,8 @@ public class PostController {
     @GetMapping("/formAddPost")
     public String addPost(Model model) {
         model.addAttribute("posts",
-                new Post(0, "Заполните поле", "Заполните поле", LocalDateTime.now(), null));
+                new Post(0, "Заполните поле", "Заполните поле", LocalDateTime.now(),
+                        new City(0, "Выберете город из списка")));
         model.addAttribute("cities", cityService.getAllCities());
         return "addPost";
     }

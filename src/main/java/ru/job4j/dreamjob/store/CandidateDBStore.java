@@ -22,7 +22,8 @@ public class CandidateDBStore {
     private static final String SQL_INSERT =
             "INSERT INTO candidate(name, description, created, city_id) VALUES (?, ?, ?, ?)";
     private static final String SQL_UPDATE =
-            "UPDATE candidate SET name = ?, description = ?, created = ?, city_id = ? WHERE id = ?";
+            "UPDATE candidate SET name = ?, description = ?, created = ?, city_id = ?, photo = ?"
+                    + " WHERE id = ?";
     private static final String SQL_FIND_ID = "SELECT * FROM candidate WHERE id = ?";
     private final BasicDataSource pool;
 
@@ -71,6 +72,7 @@ public class CandidateDBStore {
             ps.setString(2, candidate.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(candidate.getCreated()));
             ps.setInt(4, candidate.getCity().getId());
+           // ps.setInt(5, candidate.getPhoto());
             ps.setInt(5, candidate.getId());
             ps.execute();
         } catch (Exception e) {
