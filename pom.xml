@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.4</version>
+    <version>2.7.2</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-
   <groupId>ru.job4j</groupId>
   <packaging>jar</packaging>
   <artifactId>job4j_dreamjob</artifactId>
-  <version>1.0</version>
-
-  <name>Job4j Dream Job</name>
+  <version>1.0-SNAPSHOT</version>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>16</maven.compiler.source>
     <maven.compiler.target>16</maven.compiler.target>
+    <java.version>16</java.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-all</artifactId>
-      <version>1.3</version>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.1.214</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -50,60 +44,15 @@
       <version>3.23.1</version>
       <scope>test</scope>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>log4j</groupId>-->
-    <!--      <artifactId>log4j</artifactId>-->
-    <!--      <version>1.2.17</version>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.slf4j</groupId>-->
-    <!--      <artifactId>slf4j-log4j12</artifactId>-->
-    <!--      <version>1.7.30</version>-->
-    <!--    </dependency>-->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20200518</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
-      <version>2.3.1</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.activation</groupId>
-      <artifactId>activation</artifactId>
-      <version>1.1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-      <version>2.3.1</version>
-    </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.2.16</version>
+      <version>42.5.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-dbcp2</artifactId>
       <version>2.9.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.quartz-scheduler</groupId>
-      <artifactId>quartz</artifactId>
-      <version>2.3.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <version>1.12.1</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -124,26 +73,46 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>net.jcip</groupId>
-          <artifactId>jcip-annotations</artifactId>
-          <version>1.0</version>
-          <scope>compile</scope>
-      </dependency>
     <dependency>
       <groupId>net.jcip</groupId>
       <artifactId>jcip-annotations</artifactId>
       <version>1.0</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>2.7.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
+        <configuration>
+          <skipTests>false</skipTests>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.1.2</version>
+        <configuration>
+          <configLocation>checkstyle.xml</configLocation>
+          <encoding>UTF-8</encoding>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+        </configuration>
         <dependencies>
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
@@ -151,11 +120,20 @@
             <version>9.0</version>
           </dependency>
         </dependencies>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.7</version>
         <executions>
           <execution>
             <goals>
@@ -172,17 +150,52 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12.4</version>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>3.6.2</version>
         <configuration>
-          <skipTests>false</skipTests>
+          <changeLogFile>${basedir}/db/master.xml</changeLogFile>
+          <url>${db.url}</url>
+          <driver>${db.driver}</driver>
+          <username>${db.username}</username>
+          <password>${db.password}</password>
+          <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>clearCheckSums</goal>
+              <goal>update</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>test</id>
+      <properties>
+        <db.url>jdbc:h2:${basedir}/testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;</db.url>
+        <db.username></db.username>
+        <db.password></db.password>
+        <db.driver>org.h2.Driver</db.driver>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>production</id>
+      <properties>
+        <db.url>jdbc:postgresql://127.0.0.1:5432/dreamjob</db.url>
+        <db.username>postgres</db.username>
+        <db.password>password</db.password>
+        <db.driver>org.postgresql.Driver</db.driver>
+      </properties>
+    </profile>
+  </profiles>
+
 </project>
