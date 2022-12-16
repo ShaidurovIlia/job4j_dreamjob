@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -19,57 +18,54 @@
     <title>Работа мечты</title>
 </head>
 <body>
+
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Работа мечты</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/index}">Главная</a>
-                <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
-                <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
-                <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
-                <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Dream Job</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" th:href="@{/index}">Главная </a>
+                    <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
+                    <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
+                    <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
+                    <a class="nav-item nav-link active" href="#">Добавить кандидата <span class="sr-only">(current)</span></a>
+                </div>
             </div>
-        </div>
-    </nav>
-    <div class="row">
+        </nav>
+
+    <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Новый кандидат
-            </div>
-            <div class="card-body">
-                <form th:action="@{/createCandidate}" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="0"/>
-                    <div class="form-group">
-                        <label for="name">Имя кандидата</label>
-                        <input type="text" class="form-control" name="name" id="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Описание резюме</label>
-                        <input type="text" class="form-control" name="description" id="description">
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" name="visible" class="form-check-input" id="visible">
-                        <label class="form-check-label" for="visible">Опубликовать</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="city.id">Город</label>
-                        <select class="form-control" id="city.id" name="city.id">
-                            <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Фотография</label>
-                        <input type="file" class="form-control" name="file" id="file">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
-            </div>
+                Новый кандидат.
         </div>
+    <div class="card-body">
+        <form th:action="@{/createCandidate}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Имя</label>
+                <input type="text" class="form-control" name="name" id="name">
+                <label for="name">Фотография</label>
+                <input type="file" class="form-control" name="file" id="file">
+                <label for="name">Описание</label>
+                <input type="text" class="form-control" name="description" id="description">
+                <label for="city.id">Город</label>
+                <select class="form-control" id="city.id" name="city.id">
+                    <option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+                </select>
+                <input type="hidden" name="created" value="0"/>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" name="visible" class="form-check-input" id="visible">
+                <label class="form-check-label" for="visible">Опубликовать</label>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+        </form>
     </div>
+</div>
+</div>
 </div>
 </body>
 </html>

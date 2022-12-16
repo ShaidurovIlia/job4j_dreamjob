@@ -1,37 +1,27 @@
 package ru.job4j.dreamjob.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Модель данных.
+ * Класс описывает кандидата.
+ */
 public class Candidate implements Serializable {
     private int id;
     private String name;
-    private String description;
-    private LocalDateTime created;
-    private boolean visible;
-    private City city;
     private byte[] photo;
+    private String description;
+    private String created;
+    private boolean visible;
 
-    public Candidate() {
-    }
+    private City city;
 
-    public Candidate(int id, String name, String description, LocalDateTime created, City city) {
+    public Candidate(int id, String name, String description, String created) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
-        this.city = city;
-    }
-
-    public Candidate(int id, String name, String description, LocalDateTime created, City city,
-                     byte[] photo) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.created = created;
-        this.city = city;
-        this.photo = photo;
     }
 
     public int getId() {
@@ -58,11 +48,11 @@ public class Candidate implements Serializable {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 
@@ -74,20 +64,20 @@ public class Candidate implements Serializable {
         this.visible = visible;
     }
 
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
     public byte[] getPhoto() {
         return photo;
     }
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override
@@ -107,3 +97,4 @@ public class Candidate implements Serializable {
         return Objects.hash(id);
     }
 }
+

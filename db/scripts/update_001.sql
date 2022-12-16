@@ -12,9 +12,10 @@ CREATE TABLE IF NOT EXISTS candidate
     id          SERIAL PRIMARY KEY,
     name        TEXT,
     description TEXT,
-    created     DATE,
+    photo       BYTEA,
     city_id     INT,
-    photo       BYTEA
+    visible boolean,
+    created     DATE
 );
 
 CREATE TABLE IF NOT EXISTS users

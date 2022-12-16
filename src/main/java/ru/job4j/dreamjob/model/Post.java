@@ -1,37 +1,27 @@
 package ru.job4j.dreamjob.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Модель данных.
+ * Класс описывает вакансию.
+ */
 public class Post implements Serializable {
     private int id;
     private String name;
-
     private String description;
-
-    private LocalDateTime created;
-
+    private String created;
     private boolean visible;
 
     private City city;
 
-    public Post(int id, String name, String description, LocalDateTime created, City city) {
+    public Post(int id, String name, String description, String created) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
-        this.city = city;
-    }
 
-    public Post(int id, String name, String description, LocalDateTime created,
-                boolean visible, City city) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.created = created;
-        this.visible = visible;
-        this.city = city;
     }
 
     public int getId() {
@@ -58,11 +48,11 @@ public class Post implements Serializable {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 

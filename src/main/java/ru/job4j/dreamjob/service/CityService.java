@@ -20,6 +20,10 @@ public class CityService {
         cities.put(3, new City(3, "Екатеренбург"));
     }
 
+    /**
+     * Вернуть список городов
+     * @return List<City>
+     */
     public List<City> getAllCities() {
         return new ArrayList<>(cities.values());
     }

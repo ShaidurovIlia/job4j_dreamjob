@@ -3,41 +3,63 @@ package ru.job4j.dreamjob.service;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.model.Post;
-import ru.job4j.dreamjob.store.PostDBStore;
+import ru.job4j.dreamjob.store.PostStore;
 
 import java.util.Collection;
-import java.util.List;
 
 @ThreadSafe
 @Service
-public class PostService {
-    private final PostDBStore storePost;
-    private final CityService cityService;
 
-    public PostService(PostDBStore store, CityService city) {
-        this.storePost = store;
-        this.cityService = city;
+/**
+ * Класс описывающий бизнесс логику работы приложения с моделью POST.
+ * Работа с хранилищем через сквозные вызовы классов персистенции.
+ */
+public class PostService {
+
+    /**
+     * Работа контроллеров с персистенцией идет через промежуточный слой
+     * Service. POST_STORE - константа для работы с PostStore дублируеться
+     * чтобы не свзязать логику контроллеров и персистенции.
+     */
+    private final PostStore postStore;
+
+    public PostService(PostStore postStore) {
+        this.postStore = postStore;
     }
+
+    /**
+     * Предоставляет все значения хранилища.
+     * @return Collection<Post>
+     */
 
     public Collection<Post> findAll() {
-        List<Post> posts = storePost.findAll();
-        posts.forEach(
-                post -> post.setCity(
-                        cityService.findById(post.getCity().getId())
-            )
-        );
-        return posts;
+        return postStore.findAll();
     }
+    /**
+     * Создать post.
+     * Добавить во внутренее хранилище.
+     * @param post
+     */
 
-    public void addPost(Post post) {
-        storePost.addPost(post);
+    public void create(Post post) {
+        postStore.create(post);
     }
+    /**
+     * Найти post по id
+     * @param id
+     * @return Post
+     */
 
-    public Post findByIdPost(int id) {
-        return storePost.findByIdPost(id);
+    public Post findById(int id) {
+        return postStore.findById(id);
     }
+    /**
+     * Заменить запись во внутренем хранилище
+     * на вновь переданую в аргументе.
+     * @param post
+     */
 
-    public void updatePost(Post post) {
-        storePost.updatePost(post);
+    public void update(Post post) {
+        postStore.update(post);
     }
 }
