@@ -6,7 +6,7 @@ import ru.job4j.dreamjob.model.Post;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,17 +33,17 @@ public class PostStore {
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
 
     private PostStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "desc Junior", date.get()));
-        posts.put(2, new Post(2, "Middle Java Job", "desc Middle", date.get()));
-        posts.put(3, new Post(3, "Senior Java Job", "desc Senior", date.get()));
+        posts.put(1, new Post(1, "Junior Java Job", "desc Junior",  date.get(), true));
+        posts.put(2, new Post(2, "Middle Java Job", "desc Middle", date.get(), true));
+        posts.put(3, new Post(3, "Senior Java Job", "desc Senior", date.get(), true));
     }
 
     /**
      * Геттер всех значений хранилища
      * @return Collection<Post>
      */
-    public Collection<Post> findAll() {
-        return posts.values();
+    public List<Post> findAll() {
+        return (List<Post>) posts.values();
     }
 
     /**
@@ -53,7 +53,7 @@ public class PostStore {
      */
 
     public void create(Post post) {
-        post.setId(POST_ID.incrementAndGet());
+        post.setId(POST_ID.getAndIncrement());
         date = new AtomicReference<>(LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         post.setCreated(date.get());

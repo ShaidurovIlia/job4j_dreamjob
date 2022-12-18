@@ -3,37 +3,47 @@ package ru.job4j.dreamjob.service;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.model.Post;
-import ru.job4j.dreamjob.store.PostStore;
+import ru.job4j.dreamjob.store.PostDBStore;
 
-import java.util.Collection;
-
-@ThreadSafe
-@Service
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Класс описывающий бизнесс логику работы приложения с моделью POST.
- * Работа с хранилищем через сквозные вызовы классов персистенции.
+ * Работа с БД через слой персистенции.
  */
+@ThreadSafe
+@Service
 public class PostService {
 
+    private AtomicReference<String> date = new AtomicReference<>(LocalDateTime.now()
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+    private final PostDBStore postDBStore;
     /**
-     * Работа контроллеров с персистенцией идет через промежуточный слой
-     * Service. POST_STORE - константа для работы с PostStore дублируеться
-     * чтобы не свзязать логику контроллеров и персистенции.
+      * Сервис городов для установки в обьекты post
      */
-    private final PostStore postStore;
+    private final CityService cityService;
 
-    public PostService(PostStore postStore) {
-        this.postStore = postStore;
+    public PostService(PostDBStore postDBStore, CityService cityService) {
+        this.postDBStore = postDBStore;
+        this.cityService = cityService;
     }
 
     /**
      * Предоставляет все значения хранилища.
+     * В каждое предаставленое значение Post
+     * устанавливаем свой город по id.
      * @return Collection<Post>
      */
 
-    public Collection<Post> findAll() {
-        return postStore.findAll();
+        public List<Post> findAllPost() {
+            List<Post> posts = postDBStore.findAllPosts();
+            posts.forEach(
+                post -> post.setCity(
+                        cityService.findById(post.getCity().getId()))
+        );
+        return posts;
     }
     /**
      * Создать post.
@@ -42,7 +52,8 @@ public class PostService {
      */
 
     public void create(Post post) {
-        postStore.create(post);
+        post.setCreated(date.get());
+        postDBStore.addPost(post);
     }
     /**
      * Найти post по id
@@ -50,8 +61,8 @@ public class PostService {
      * @return Post
      */
 
-    public Post findById(int id) {
-        return postStore.findById(id);
+    public Post findPostById(int id) {
+        return postDBStore.findPostById(id);
     }
     /**
      * Заменить запись во внутренем хранилище
@@ -60,6 +71,6 @@ public class PostService {
      */
 
     public void update(Post post) {
-        postStore.update(post);
+        postDBStore.update(post);
     }
 }
