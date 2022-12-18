@@ -6,7 +6,7 @@ import ru.job4j.dreamjob.model.Candidate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,11 +31,11 @@ public class CandidateStore {
 
     public CandidateStore() {
         candidates.put(1, new Candidate(1, "Carey Mahoney", "description of Mahoney",
-                date.get()));
+                date.get(), true, new byte[]{0}));
         candidates.put(2, new Candidate(2, "Moses Hightower", "description of Hightower",
-                date.get()));
+                date.get(), true, new byte[]{0}));
         candidates.put(3, new Candidate(3, "Eugene Tackleberry", "description of Tackleberry",
-                date.get()));
+                date.get(), true, new byte[]{0}));
     }
 
     /**
@@ -43,8 +43,8 @@ public class CandidateStore {
      * @return Collection<Candidate>
      */
 
-    public Collection<Candidate> findAll() {
-        return candidates.values();
+    public List<Candidate> findAll() {
+        return (List<Candidate>) candidates.values();
     }
 
     /**
@@ -53,7 +53,7 @@ public class CandidateStore {
      * @param candidate
      */
     public void create(Candidate candidate) {
-        candidate.setId(CANDIDATE_ID.incrementAndGet());
+        candidate.setId(CANDIDATE_ID.getAndIncrement());
         date = new AtomicReference<>(LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         candidate.setCreated(date.get());
