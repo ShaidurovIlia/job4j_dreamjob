@@ -24,6 +24,7 @@ public class Candidate implements Serializable {
         this.created = created;
         this.visible = (visible != null) ? visible : false;
         this.photo = (photo != null) ? photo : new byte[]{0};
+        setCity(new City(0, "none"));
     }
 
     public int getId() {
