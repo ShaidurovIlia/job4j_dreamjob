@@ -25,6 +25,12 @@ public class UserService {
         return userDBStore.add(user);
     }
 
+    /**
+     * Найти запись в БД по условию или пустой Optional
+     * @param email
+     * @param password
+     * @return Optional<User>
+     */
     public Optional<User> findUserByEmailAndPassword(String email, String password) {
         return userDBStore.findUserByEmailAndPassword(email, password);
     }

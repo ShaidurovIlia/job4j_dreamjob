@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.City;
+import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.CityService;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,10 +43,19 @@ public class CandidateController {
     /**
      * Используется Thymeleaf для поиска объектов,
      * которые нужны отобразить на виде (View).
+     * Загружаем из текущей ссесии User и добовляем в Model
+     * Spring создаст сам этот обьект и загрузит его данные
+     * в предсавлении (html странице).
      * @return String
      */
     @GetMapping("/candidates")
-    public String candidates(Model model) {
+    public String candidates(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("candidates", candidateService.findAllCandidates());
         return "candidates";
     }
@@ -56,7 +67,13 @@ public class CandidateController {
      * @return String
      */
     @GetMapping("/formAddCandidate")
-    public String addCandidate(Model model) {
+    public String addCandidate(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+            model.addAttribute("user", user);
+        }
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         model.addAttribute("candidate", new Candidate(0, "Заполните поле",
                 "", date, false, new byte[]{0}));
@@ -94,7 +111,7 @@ public class CandidateController {
      * 3.Сервер преобразует массив байт в строку в кодировке BASE64.
      * В свою очередь браузер преобразует ее в изображение.
      * @param candidateId
-     * @return
+     * @return ResponseEntity<Resource>
      */
     @GetMapping("/photoCandidate/{candidateId}")
     public ResponseEntity<Resource> download(@PathVariable("candidateId") Integer candidateId) {
@@ -108,13 +125,23 @@ public class CandidateController {
 
     /**
      * Обрабатывает переход на updateCandidate.html
+     * Загружаем из текущей ссесии User и добовляем в Model
+     * Spring создаст сам этот обьект и загрузит его данные
+     * в предсавлении (html странице).
      * @param model
      * @param id
      * @return String
      */
 
     @GetMapping("/formUpdateCandidate/{candidateId}")
-    public String formUpdateCandidate(Model model, @PathVariable("candidateId") int id) {
+    public String formUpdateCandidate(Model model, HttpSession session,
+                                      @PathVariable("candidateId") int id) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("candidate", candidateService.findCandidateById(id));
         model.addAttribute("cities", cityService.getAllCities());
         return "updateCandidate";

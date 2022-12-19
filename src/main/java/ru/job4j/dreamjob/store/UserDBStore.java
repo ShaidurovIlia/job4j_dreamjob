@@ -56,10 +56,11 @@ public class UserDBStore {
     }
 
     /**
-     * Находит user в БД по email и password.
+     * Находит запись в БД по email и password.
+     * Возвращает найденную запись или пустой Optional.
      * @param email
      * @param password
-     * @return
+     * @return Optional<User>
      */
     public Optional<User> findUserByEmailAndPassword(String email, String password) {
         User user;
